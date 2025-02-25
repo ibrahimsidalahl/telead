@@ -1,1 +1,22 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"telead-ad2b0","appId":"1:511032183989:android:8b91777b906430f34d82fc","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"telead-ad2b0","configurations":{"android":"1:511032183989:android:8b91777b906430f34d82fc","ios":"1:511032183989:ios:0bb1711aaf3b75e54d82fc"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "telead-ad2b0",
+          "appId": "1:511032183989:android:8b91777b906430f34d82fc",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "telead-ad2b0",
+          "configurations": {
+            "android": "1:511032183989:android:8b91777b906430f34d82fc",
+            "ios": "1:511032183989:ios:0bb1711aaf3b75e54d82fc"
+          }
+        }
+      }
+    }
+  }
+}
