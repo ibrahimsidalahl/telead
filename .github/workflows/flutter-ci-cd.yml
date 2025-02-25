@@ -43,7 +43,7 @@ jobs:
         run: |
           export GOOGLE_APPLICATION_CREDENTIALS="$HOME/firebase-service-account.json"
           firebase projects:list
-          firebase use --add ${{ secrets.FIREBASE_PROJECT_ID }}
+          firebase use --add ${{ secrets.FIREBASE_APP_ID }}
 
       - name: Upload APK to Firebase App Distribution
         run: |
