@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "511032183989",
+    "project_id": "telead-ad2b0",
+    "storage_bucket": "telead-ad2b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511032183989:android:8b91777b906430f34d82fc",
+        "android_client_info": {
+          "package_name": "com.example.telead"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "511032183989-b7ic06m4e61quirv9pc55klh4mqmm730.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.telead",
+            "certificate_hash": "1cfef372e611f9e25dc9b072f0a7ea7db27ae2f5"
+          }
+        },
+        {
+          "client_id": "511032183989-09dkfeeo8u15k0d7qum6te6af2e6kdic.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIN3XAunH3XdmCQ-RpVAMB2j8yCoX0jv4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "511032183989-09dkfeeo8u15k0d7qum6te6af2e6kdic.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "511032183989-1f0basg7acaod6301si3uc86t7rkso49.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.elearning"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
