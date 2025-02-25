@@ -50,4 +50,4 @@ jobs:
           export GOOGLE_APPLICATION_CREDENTIALS="$HOME/firebase-service-account.json"
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app ${{ secrets.FIREBASE_APP_ID }} \
-            --project ${{ secrets.FIREBASE_PROJECT_ID }}
+            --project ${{ secrets.FIREBASE_APP_ID }}
