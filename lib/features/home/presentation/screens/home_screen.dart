@@ -258,6 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         instructor_Id: course.instructorId,
                                         price: course.price,
                                         rating: course.rating,
+                                        lessons: course.lessons,
                                       ),
                                     ),
                                   );

@@ -57,7 +57,7 @@ class FirebaseServices {
 
     return coursesList;
   }
-  Future<UserModel> getUserData(String id , ) async {
+  Future<UserModel> getUserData(String id ) async {
     try {
       DocumentSnapshot<Map<String, dynamic>> docSnapshot = await FirebaseFirestore.instance
           .collection('users')

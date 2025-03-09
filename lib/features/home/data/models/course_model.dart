@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:telead/features/home/data/models/lessons_model.dart';
 import 'package:telead/features/home/data/models/rating_model.dart';
 
 class CourseModel {
@@ -11,6 +12,7 @@ class CourseModel {
   String instructorId;
   List<String> studentEnrolled;
   List<Rating> rating;
+  List<LessonsModel> lessons;
 
   CourseModel({
     required this.id,
@@ -22,19 +24,20 @@ class CourseModel {
     required this.instructorId,
     required this.studentEnrolled,
     required this.rating,
+    required this.lessons,
   });
 
   static CourseModel empty() => CourseModel(
-    id: '',
-    title: '',
-    imageUrl: '',
-    price: 0,
-    categoryId: '',
-    description: '',
-    instructorId: '',
-    studentEnrolled: [],
-    rating: [],
-  );
+      id: '',
+      title: '',
+      imageUrl: '',
+      price: 0,
+      categoryId: '',
+      description: '',
+      instructorId: '',
+      studentEnrolled: [],
+      rating: [],
+      lessons: []);
 
   Map<String, dynamic> toJson() {
     return {
@@ -46,7 +49,9 @@ class CourseModel {
       'description': description,
       'category_Id': categoryId,
       'student_Enrolled': studentEnrolled,
-      'rating': rating.map((r) => r.toJson()).toList(), // Convert Rating objects to JSON
+      'lessons': rating.map((r) => r.toJson()).toList(),
+      'rating': rating.map((r) => r.toJson()).toList(),
+      // Convert Rating objects to JSON
     };
   }
 
@@ -67,7 +72,14 @@ class CourseModel {
             ? List<String>.from(data['student_Enrolled'])
             : [],
         rating: data['rating'] != null
-            ? (data['rating'] as List<dynamic>).map((r) => Rating.fromJson(r)).toList()
+            ? (data['rating'] as List<dynamic>)
+                .map((r) => Rating.fromJson(r))
+                .toList()
+            : [],
+        lessons: data['lessons'] != null
+            ? (data['lessons'] as List<dynamic>)
+                .map((r) => LessonsModel.fromJson(r))
+                .toList()
             : [],
       );
     } else {
@@ -75,4 +87,3 @@ class CourseModel {
     }
   }
 }
-

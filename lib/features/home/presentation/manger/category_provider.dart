@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/firebase_services/firebase_services.dart';
 import '../../data/models/category_model.dart';

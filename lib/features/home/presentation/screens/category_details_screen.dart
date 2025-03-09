@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +6,7 @@ import 'package:telead/core/widgets/custom_search_bar.dart';
 import 'package:telead/features/home/presentation/manger/courses_provider.dart';
 
 import '../../../../core/styles/app_style.dart';
+import '../../data/models/rating_model.dart';
 import 'course_details_screen.dart';
 
 class CategoryDetailsScreen extends StatefulWidget {
@@ -28,6 +28,12 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
       Provider.of<CoursesProvider>(context, listen: false).fetchData(widget.id);
     });
   }
+  double getAverageRating(List<Rating> ratings) {
+    if (ratings.isEmpty) return 0.0;
+    double total = ratings.fold(0, (sum, r) => sum + r.rate);
+    return total / ratings.length;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,137 +65,150 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
             SizedBox(height: 20.h),
             Expanded(
               child: courses != null
-                  ? ListView.builder(
-                      itemCount: courses.length,
-                      itemBuilder: (context, index) {
-                        final course = courses[index];
-
-                        return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CourseDetailsScreen(
-                                  title: course.title,
-                                  category_Id: course.categoryId,
-                                  description: course.description,
-                                  image_Url: course.imageUrl,
-                                  instructor_Id: course.instructorId,
-                                  price: course.price,
-                                  rating: course.rating,
-                                ),
-                              ),
-                            );
-                            print(course.rating);
-                          },
-                          child: Stack(
-                            children: [
-                              Container(
-                                height: 120.h,
-                                width: 360.w,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.r),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: const Offset(0, 3),
-                                      )
-                                    ]),
-                                margin: EdgeInsets.symmetric(vertical: 8.h),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      height: 140.h,
-                                      width: 120.w,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: NetworkImage(course.imageUrl),
-                                          fit: BoxFit.fill,
-                                        ),
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(8.r),
-                                            bottomLeft: Radius.circular(8.r)),
-                                      ),
+                  ? courses.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'No courses found',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: courses.length,
+                          itemBuilder: (context, index) {
+                            final course = courses[index];
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CourseDetailsScreen(
+                                      title: course.title,
+                                      category_Id: course.categoryId,
+                                      description: course.description,
+                                      image_Url: course.imageUrl,
+                                      instructor_Id: course.instructorId,
+                                      price: course.price,
+                                      rating: course.rating,
+                                      lessons: course.lessons,
                                     ),
-                                    SizedBox(
-                                      width: 10.w,
+                                  ),
+                                );
+                              },
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    height: 120.h,
+                                    width: 360.w,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.r),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: const Offset(0, 3),
+                                        )
+                                      ],
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                    margin: EdgeInsets.symmetric(vertical: 8.h),
+                                    child: Row(
                                       children: [
-                                        SizedBox(height: 8.h),
-                                        Text(
-                                          '3D Design',
-                                          style:
-                                              AppStyles.styleOrange16(context),
-                                        ),
-                                        SizedBox(height: 2.h),
                                         Container(
-                                          width: 188.w,
-                                          child: Text(
-                                            course.title,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: AppStyles.styleBold20(context),
+                                          height: 140.h,
+                                          width: 120.w,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image:
+                                                  NetworkImage(course.imageUrl),
+                                              fit: BoxFit.fill,
+                                            ),
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(8.r),
+                                              bottomLeft: Radius.circular(8.r),
+                                            ),
                                           ),
                                         ),
-                                        SizedBox(height: 2.h),
-                                        Text(
-                                          '${course.price} \$',
-                                          style: TextStyle(
-                                              color: Color(0xff0961F5),
-                                              fontSize: 18.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(height: 2.h),
-                                        Row(
+                                        SizedBox(width: 10.w),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Icon(
-                                              Icons.star,
-                                              color: Colors.yellow,
-                                              size: 16.sp,
-                                            ),
+                                            SizedBox(height: 8.h),
                                             Text(
-                                              '${course.rating[0].rate}',
-                                              style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  fontWeight: FontWeight.bold),
+                                              '3D Design',
+                                              style: AppStyles.styleOrange16(
+                                                  context),
                                             ),
+                                            SizedBox(height: 2.h),
+                                            Container(
+                                              width: 188.w,
+                                              child: Text(
+                                                course.title,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppStyles.styleBold20(
+                                                    context),
+                                              ),
+                                            ),
+                                            SizedBox(height: 2.h),
                                             Text(
-                                              '    |   ${course.studentEnrolled.length} Std',
+                                              '${course.price} \$',
                                               style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  fontWeight: FontWeight.bold),
+                                                color: Color(0xff0961F5),
+                                                fontSize: 18.sp,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(height: 2.h),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Colors.yellow,
+                                                  size: 16.sp,
+                                                ),
+                                                Text(
+                                                  '${getAverageRating(course.rating).toStringAsFixed(1)}',
+                                                  style: TextStyle(
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+
+                                                Text(
+                                                  '    |   ${course.studentEnrolled.length} Std',
+                                                  style: TextStyle(
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
                                       ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 94.h,
-                                right: 1.w,
-                                child: IconButton(
-                                  onPressed: () {
-                                    // Add your onPressed logic here
-                                  },
-                                  icon: Icon(
-                                    Icons.book_outlined,
-                                    color: Colors.blue,
-                                    size: 28.sp,
                                   ),
-                                ),
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    )
+                                  Positioned(
+                                    bottom: 94.h,
+                                    right: 1.w,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        // Add your onPressed logic here
+                                      },
+                                      icon: Icon(
+                                        Icons.book_outlined,
+                                        color: Colors.blue,
+                                        size: 28.sp,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        )
                   : const Center(
                       child: CircularProgressIndicator(),
                     ),

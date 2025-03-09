@@ -3,19 +3,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:telead/features/home/presentation/manger/toggle.dart';
 
+import '../../data/models/rating_model.dart';
+
 class CourseDetailsBox extends StatelessWidget {
   String category_id;
   String title;
   num price;
   String description;
+  List<Rating> rating ;
    CourseDetailsBox({super.key,
      required this.title,
      required this.category_id,
      required this.price,
      required this.description,
+     required this.rating,
 
    });
-
+  double getAverageRating(List<Rating> ratings) {
+    if (ratings.isEmpty) return 0.0;
+    double total = ratings.fold(0, (sum, r) => sum + r.rate);
+    return total / ratings.length;
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,7 +67,7 @@ class CourseDetailsBox extends StatelessWidget {
                   ),
                   SizedBox(width: 4.w),
                   Text(
-                    '4.2',
+                    '${getAverageRating(rating).toStringAsFixed(1)}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14.sp,

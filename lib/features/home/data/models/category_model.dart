@@ -5,13 +5,10 @@ class CategoryModel {
   String title;
   String image_url;
 
-
-
   CategoryModel({
     required this.id,
     required this.title,
     required this.image_url,
-
   });
 
   static CategoryModel empty() => CategoryModel(
@@ -26,7 +23,6 @@ class CategoryModel {
       'id': id,
       'title': title,
       'image_url': image_url,
-
     };
   }
 
@@ -44,5 +40,4 @@ class CategoryModel {
       return CategoryModel.empty();
     }
   }
-
 }

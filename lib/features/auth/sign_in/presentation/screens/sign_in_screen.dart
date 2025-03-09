@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,23 +6,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/styles/app_style.dart';
 import '../../../../../core/widgets/custom_text_button.dart';
 import '../../../../../core/widgets/custom_text_form_filed.dart';
-import '../../../../bottom_navigation_bar/presentation/screens/bottom_navigation_bar_screen.dart';
-import '../../../../home/presentation/screens/teacher.dart';
 import '../../../sign_up/presentation/screens/sign_up_screen.dart';
 import '../../../widget/custom_circle_avatar.dart';
+import '../../data/sign_in_view_model.dart';
 
-class SignInScreen extends StatefulWidget {
+class SignInScreen extends StatelessWidget {
   static TextEditingController emailController = TextEditingController();
   static TextEditingController passwordController = TextEditingController();
   static const routeName = 'signIn';
+  final SignInViewModel _viewModel = SignInViewModel();
 
   SignInScreen({super.key});
 
-  @override
-  State<SignInScreen> createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -39,7 +33,7 @@ class _SignInScreenState extends State<SignInScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 60.h,
+                  height: 40.h,
                 ),
                 Center(child: Image.asset('assets/telead_logo_vertical.png')),
                 SizedBox(
@@ -67,7 +61,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       }
                       return null;
                     },
-                    controller: SignInScreen.emailController,
+                    controller: emailController,
                     prefixIcon: Icon(
                       Icons.email_outlined,
                       color: Theme.of(context).primaryColor,
@@ -84,7 +78,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       }
                       return null;
                     },
-                    controller: SignInScreen.passwordController,
+                    controller: passwordController,
                     prefixIcon: Icon(
                       Icons.lock_outline,
                       color: Theme.of(context).primaryColor,
@@ -110,99 +104,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     title: 'Sign In',
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        showDialog<void>(
-                            context: context,
-                            builder: (context) {
-                              return const Center(
-                                child: CircularProgressIndicator(color: Color(0xff0961F5),),
-                              );
-                            });
-
-                        try {
-
-                          // Fetch the user's document from Firestore based on their email
-                          DocumentSnapshot userDoc = await FirebaseFirestore
-                              .instance
-                              .collection('users')
-                              .doc(SignInScreen.emailController.text.trim())
-                              .get();
-
-                          if (userDoc.exists) {
-                            String role = userDoc['role'];
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Success!'),
-                                backgroundColor: Color(0xff0961F5),
-                              ),
-                            );
-                            // SignInScreen.emailController.clear();
-                            // SignInScreen.passwordController.clear();
-                            if (role == 'Student') {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      BottomNavigationBarScreen(
-                                    user_id: SignInScreen.emailController.text
-                                        .trim(),
-                                  ),
-                                ),
-                              );
-                            } else if (role == 'Teacher') {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Teacher(),
-                                ),
-                              );
-                            }
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('User document not found!')),
-                            );
-                          }
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'user-not-found') {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content:
-                                      Text('No user found for that email.')),
-                            );
-                          } else if (e.code == 'wrong-password') {
-                            Navigator.of(context).pop();
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Wrong password provided.')),
-                            );
-                          } else if (e.code == 'invalid-credential') {
-                            Navigator.of(context).pop();
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text(
-                                      'Invalid credential. Please try again.')),
-                            );
-                          } else {
-                            Navigator.of(context).pop();
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                  content:
-                                      Text('An error occurred1: ${e.message}')),
-                            );
-                          }
-                        } catch (e) {
-                          Navigator.of(context).pop();
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content: Text(
-                                    'An error occurred2: ${e.toString()}')),
-                          );
-                        }
+                        await _viewModel.signIn(
+                            context,
+                            emailController.text.trim(),
+                            passwordController.text.trim());
                       }
                     }),
                 SizedBox(
@@ -212,14 +117,16 @@ class _SignInScreenState extends State<SignInScreen> {
                     title: 'Sign Out',
                     onPressed: () async {
                       showDialog<void>(
-                          context:context,
-                          builder : (context){
-                            return const Center(child: CircularProgressIndicator(color: Color(0xff0961F5),),);
-                          }
-                      );
+                          context: context,
+                          builder: (context) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: Color(0xff0961F5),
+                              ),
+                            );
+                          });
                       await FirebaseAuth.instance.signOut();
                       Navigator.of(context).pop();
-
                     }),
                 SizedBox(
                   height: 20.h,
