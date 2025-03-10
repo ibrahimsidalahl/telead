@@ -29,10 +29,15 @@ jobs:
         run: flutter build apk --release
 
       - name: Decode Firebase Service Account Key
-        run: echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}" | base64 --decode > $HOME/firebase-service-account.json
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}' > $HOME/firebase-service-account.json
 
       - name: Install Firebase CLI
         run: curl -sL https://firebase.tools | bash
+
+      - name: Debug Firebase Authentication
+        run: |
+          cat $HOME/firebase-service-account.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS"
 
       - name: Authenticate Firebase CLI
         run: |
@@ -45,6 +50,4 @@ jobs:
           export GOOGLE_APPLICATION_CREDENTIALS="$HOME/firebase-service-account.json"
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app ${{ secrets.FIREBASE_APP_ID }} \
-            --project ${{ secrets.FIREBASE_PROJECT_ID }} \
-            --groups "closed testers" \
-            --release-notes "New version with bug fixes and performance improvements."
+            --project ${{ secrets.FIREBASE_PROJECT_ID }}

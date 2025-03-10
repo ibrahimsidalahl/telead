@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:telead/features/auth/sign_up/presentation/manger/sign_up_provider.dart';
 import 'package:telead/features/home/presentation/screens/lessons_screen.dart';
+import 'package:telead/features/on_boarding/presentation/screens/on_boarding_screen.dart';
 
 import 'core/helper_funcations/on_generate_route.dart';
 import 'features/auth/sign_in/presentation/screens/sign_in_screen.dart';
@@ -78,7 +79,7 @@ class _MyAppState extends State<MyApp> {
               onGenerateRoute: onGenerateRoute,
               debugShowCheckedModeBanner: false,
               theme: Provider.of<ThemeProvider>(context).getCurrentTheme(),
-              home: SignInScreen()
+              home: OnBoardingScreen()
           ),
         );
       },
