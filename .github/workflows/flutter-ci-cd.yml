@@ -51,3 +51,4 @@ jobs:
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app ${{ secrets.FIREBASE_APP_ID }} \
             --project ${{ secrets.FIREBASE_PROJECT_ID }}
+            --groups "closed testers"
