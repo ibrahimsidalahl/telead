@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,7 +32,7 @@ class SignInScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 40.h,
+                  height: 80.h,
                 ),
                 Center(child: Image.asset('assets/telead_logo_vertical.png')),
                 SizedBox(
@@ -113,21 +112,6 @@ class SignInScreen extends StatelessWidget {
                 SizedBox(
                   height: 12.h,
                 ),
-                CustomTextButton(
-                    title: 'Sign Out',
-                    onPressed: () async {
-                      showDialog<void>(
-                          context: context,
-                          builder: (context) {
-                            return const Center(
-                              child: CircularProgressIndicator(
-                                color: Color(0xff0961F5),
-                              ),
-                            );
-                          });
-                      await FirebaseAuth.instance.signOut();
-                      Navigator.of(context).pop();
-                    }),
                 SizedBox(
                   height: 20.h,
                 ),

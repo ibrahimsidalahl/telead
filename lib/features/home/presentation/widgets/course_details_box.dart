@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:telead/features/home/data/models/lessons_model.dart';
 import 'package:telead/features/home/presentation/manger/toggle.dart';
 
 import '../../data/models/rating_model.dart';
@@ -11,12 +12,14 @@ class CourseDetailsBox extends StatelessWidget {
   num price;
   String description;
   List<Rating> rating ;
+  List<LessonsModel> lessons ;
    CourseDetailsBox({super.key,
      required this.title,
      required this.category_id,
      required this.price,
      required this.description,
      required this.rating,
+     required this.lessons
 
    });
   double getAverageRating(List<Rating> ratings) {
@@ -101,7 +104,7 @@ class CourseDetailsBox extends StatelessWidget {
               ),
               SizedBox(width: 4.w),
               Text(
-                '21 Class',
+                '${lessons.length} Class',
                 style: TextStyle(
                   fontSize: 12.sp,
                   color: Colors.grey,

@@ -158,6 +158,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                 category_id: widget.category_Id,
                 price: widget.price,
                 description: widget.description,
+                lessons: widget.lessons,
               ),
             ),
             Positioned(

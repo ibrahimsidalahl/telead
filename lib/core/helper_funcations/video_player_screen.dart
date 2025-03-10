@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 
-class VideoPlayerFunction extends StatefulWidget {
+class VideoPlayerScreen extends StatefulWidget {
   final String videoUrl;
 
-  const VideoPlayerFunction({super.key, required this.videoUrl});
+  const VideoPlayerScreen({super.key, required this.videoUrl});
 
   @override
-  _VideoPlayerFunctionState createState() => _VideoPlayerFunctionState();
+  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
 }
 
-class _VideoPlayerFunctionState extends State<VideoPlayerFunction> {
+class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   late VideoPlayerController _videoPlayerController;
   ChewieController? _chewieController;
 
@@ -43,13 +43,11 @@ class _VideoPlayerFunctionState extends State<VideoPlayerFunction> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Video Player")),
-      body: Center(
+    return Center(
         child: _chewieController != null && _chewieController!.videoPlayerController.value.isInitialized
             ? Chewie(controller: _chewieController!)
             : const CircularProgressIndicator(),
-      ),
+
     );
   }
 }
