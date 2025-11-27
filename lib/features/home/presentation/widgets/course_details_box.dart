@@ -126,7 +126,7 @@ class CourseDetailsBox extends StatelessWidget {
           // SizedBox(height: 4.h),
 
           /// About Section only
-          Align(alignment: AlignmentGeometry.topLeft,
+          Align(alignment: Alignment.topLeft,
             child: Container(
               width: 80.w,
               padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 12.w),
