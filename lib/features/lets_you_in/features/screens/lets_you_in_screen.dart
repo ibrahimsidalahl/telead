@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/styles/app_style.dart';
-import '../../../../core/widgets/custom_text_button.dart';
-import '../../../auth/sign_in/presentation/screens/sign_in_screen.dart';
-import '../../../auth/sign_up/presentation/screens/sign_up_screen.dart';
+import '../../../auth/widget/custom_text_button.dart';
+import '../../../auth/presentation/screens/sign_in_screen.dart';
+import '../../../auth/presentation/screens/sign_up_screen.dart';
 import '../widget/signIn_with_widget.dart';
 
 class LetsYouInScreen extends StatelessWidget {
@@ -33,7 +33,7 @@ class LetsYouInScreen extends StatelessWidget {
               SizedBox(
                 height: 16.h,
               ),
-              Container(
+              SizedBox(
                 height: 100.h,
                 width: 220.w,
                 child: Column(
@@ -58,9 +58,7 @@ class LetsYouInScreen extends StatelessWidget {
               SizedBox(
                 height: 16.h,
               ),
-              CustomTextButton(title: 'Sign In with Your Account', onPressed: () {
-                Navigator.pushNamed(context, SignInScreen.routeName);
-              }),
+
               SizedBox(
                 height: 16.h,
               ),

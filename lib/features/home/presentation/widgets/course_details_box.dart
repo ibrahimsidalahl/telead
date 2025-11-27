@@ -1,39 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:telead/features/home/data/models/lessons_model.dart';
-import 'package:telead/features/home/presentation/manger/toggle.dart';
 
 import '../../data/models/rating_model.dart';
 
 class CourseDetailsBox extends StatelessWidget {
-  String category_id;
-  String title;
-  num price;
-  String description;
-  List<Rating> rating ;
-  List<LessonsModel> lessons ;
-   CourseDetailsBox({super.key,
-     required this.title,
-     required this.category_id,
-     required this.price,
-     required this.description,
-     required this.rating,
-     required this.lessons
+  final String categoryId;
+  final String title;
+  final num price;
+  final String description;
+  final List<Rating> rating;
+  final List<LessonsModel> lessons;
 
-   });
+  CourseDetailsBox({
+    super.key,
+    required this.title,
+    required this.categoryId,
+    required this.price,
+    required this.description,
+    required this.rating,
+    required this.lessons,
+  });
+
   double getAverageRating(List<Rating> ratings) {
     if (ratings.isEmpty) return 0.0;
     double total = ratings.fold(0, (sum, r) => sum + r.rate);
     return total / ratings.length;
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300.w, // Adjust the width to fit the content
+      width: 300.w,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
@@ -47,14 +48,12 @@ class CourseDetailsBox extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 20.h,
-          ),
+          /// Category + Rating
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                category_id,
+                categoryId,
                 style: TextStyle(
                   color: Colors.orange,
                   fontWeight: FontWeight.bold,
@@ -63,15 +62,12 @@ class CourseDetailsBox extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                    size: 14.sp,
-                  ),
+                  Icon(Icons.star, color: Colors.amber, size: 14.sp),
                   SizedBox(width: 4.w),
                   Text(
-                    '${getAverageRating(rating).toStringAsFixed(1)}',
-                    style: TextStyle(
+                    getAverageRating(rating).toStringAsFixed(1),
+                    style: TextStyle(                        color:Theme.of(context).primaryColor,
+
                       fontWeight: FontWeight.bold,
                       fontSize: 14.sp,
                     ),
@@ -82,10 +78,11 @@ class CourseDetailsBox extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
 
-          // Course title
+          /// Course Title
           Text(
             title,
-            style: TextStyle(
+            style: TextStyle(                        color:Theme.of(context).primaryColor,
+
               fontWeight: FontWeight.bold,
               fontSize: 18.sp,
             ),
@@ -94,41 +91,27 @@ class CourseDetailsBox extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
 
-          // Class and hours info
+          /// Class Count & Hours
           Row(
             children: [
-              Icon(
-                Icons.people,
-                size: 14.sp,
-                color: Colors.grey,
-              ),
+              Icon(Icons.people, size: 14.sp, color: Colors.grey),
               SizedBox(width: 4.w),
               Text(
                 '${lessons.length} Class',
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: Colors.grey,
-                ),
+                style: TextStyle(fontSize: 12.sp, color: Colors.grey),
               ),
               SizedBox(width: 16.w),
-              Icon(
-                Icons.access_time,
-                size: 14.sp,
-                color: Colors.grey,
-              ),
+              Icon(Icons.access_time, size: 14.sp, color: Colors.grey),
               SizedBox(width: 4.w),
               Text(
                 '42 Hours',
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: Colors.grey,
-                ),
+                style: TextStyle(fontSize: 12.sp, color: Colors.grey),
               ),
             ],
           ),
           SizedBox(height: 8.h),
 
-          // Price tag
+          /// Price
           Align(
             alignment: Alignment.centerRight,
             child: Text(
@@ -136,78 +119,59 @@ class CourseDetailsBox extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
-                color: Colors.blue,
+                color: const Color(0xff0961F5),
               ),
             ),
           ),
-          SizedBox(height: 8.h),
+          // SizedBox(height: 4.h),
 
-          // Tab bar
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            child: Row(
-              children: [
-                InkWell(
-                  onTap: (){
-
-                    Provider.of<ToggleProvider>(context, listen: false).toggleColors();
-                  },
-                  child: Container(
-                    width: 140.w,
-                    padding: EdgeInsets.symmetric(vertical: 8.h),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.r),
-                      color:       Provider.of<ToggleProvider>(context, listen: false).activeColor1
-                      ,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'About',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+          /// About Section only
+          Align(alignment: AlignmentGeometry.topLeft,
+            child: Container(
+              width: 80.w,
+              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 12.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.r),
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.blueAccent.shade100,
+                    Colors.blueAccent.shade400,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 8,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Text(
+                  'About',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    letterSpacing: 0.5,
                   ),
                 ),
-                InkWell(
-                  onTap: (){
-
-                    Provider.of<ToggleProvider>(context, listen: false).toggleColors();
-                  },
-                  child: Container(
-                    width: 128.w,
-                    padding: EdgeInsets.symmetric(vertical: 8.h),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.r),
-                      color: Provider.of<ToggleProvider>(context, listen: false).activeColor2,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Curriculum',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-          SizedBox(height: 8.h),
+          )
+,
 
-          // Description with Read More
+          SizedBox(height: 10.h),
+
+          /// Description
           Text(
             description,
             style: TextStyle(
+              color:Theme.of(context).disabledColor,
+
               fontSize: 12.sp,
-              color: Colors.grey[700],
             ),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,

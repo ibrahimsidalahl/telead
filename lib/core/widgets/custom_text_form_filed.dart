@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'custom_icon_button.dart';
 
+// ignore: must_be_immutable
 class CustomTextFormField extends StatefulWidget {
   final String? title;
 
@@ -50,35 +51,35 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         controller: widget.controller,
         obscureText: widget.isPassword,
         decoration: InputDecoration(
-          fillColor: Theme.of(context).scaffoldBackgroundColor,
-          filled: true,
-          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(color: Colors.white)),
-          prefixIcon: widget.prefixIcon,
-          suffixIcon: widget.isSuffixIconShown == true
-              ? CustomIconButton(
-                  onPressed: () {
-                    setState(() {
-                      widget.isPassword = !widget.isPassword;
-                    });
-                  },
-                  icon: widget.isPassword
-                      ? Icons.visibility_off_outlined
-                      : Icons.remove_red_eye_outlined,color: Theme.of(context).primaryColor,
-                )
-              :        null,
+            fillColor: Theme.of(context).scaffoldBackgroundColor,
+            filled: true,
+            contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.r),
+                borderSide: BorderSide(color: Colors.white)),
+            prefixIcon: widget.prefixIcon,
+            suffixIcon: widget.isSuffixIconShown == true
+                ? CustomIconButton(
+              onPressed: () {
+                setState(() {
+                  widget.isPassword = !widget.isPassword;
+                });
+              },
+              icon: widget.isPassword
+                  ? Icons.visibility_off_outlined
+                  : Icons.remove_red_eye_outlined,color: Theme.of(context).primaryColor,
+            )
+                :        null,
 
-          focusedBorder: OutlineInputBorder(
+            focusedBorder: OutlineInputBorder(
               // borderRadius: BorderRadius.all(Radius.circular(12.r)),
-              borderSide: BorderSide(
-                color: Colors.black,
-              )),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8.r))),
-          hintText: widget.title,
-          hintStyle: TextStyle(color: Theme.of(context).primaryColor,)
+                borderSide: BorderSide(
+                  color: Colors.black,
+                )),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.r))),
+            hintText: widget.title,
+            hintStyle: TextStyle(color: Theme.of(context).primaryColor,)
         ),
       ),
     );

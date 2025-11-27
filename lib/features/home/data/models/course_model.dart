@@ -14,6 +14,7 @@ class CourseModel {
   List<Rating> rating;
   List<LessonsModel> lessons;
 
+
   CourseModel({
     required this.id,
     required this.title,

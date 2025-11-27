@@ -1,14 +1,9 @@
 import 'dart:io';
-import 'package:path/path.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/styles/app_style.dart';
-import '../../../../core/widgets/custom_text_button.dart';
 import '../../../../core/widgets/custom_text_form_filed.dart';
 import '../widgets/custom_avatar.dart';
 
@@ -17,17 +12,17 @@ class EditProfileScreen extends StatelessWidget {
     super.key,
     required this.url,
     required this.email,
-    required this.second_name,
-    required this.frist_name,
+    required this.secondName,
+    required this.fristName,
     required this.phone,
-  })  : fristNameController = TextEditingController(text: frist_name),
-        secondNameController = TextEditingController(text: second_name),
+  })  : fristNameController = TextEditingController(text: fristName),
+        secondNameController = TextEditingController(text: secondName),
         emailController = TextEditingController(text: email),
         phoneController = TextEditingController(text: phone);
 
   late final String url;
-  final String frist_name;
-  final String second_name;
+  final String fristName;
+  final String secondName;
   final String email;
   final String phone;
   File? imageFile;
@@ -142,42 +137,7 @@ class EditProfileScreen extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              CustomTextButton(
-                  title: 'Update',
-                  onPressed: () {
-                    Future<void> updateUser() {
-                      CollectionReference users =
-                          FirebaseFirestore.instance.collection('users');
-                      return users
-                          .doc(emailController.text)
-                          .update({
-                            'frist_name': fristNameController.text,
-                            'phone': phoneController.text,
-                            'email': emailController.text,
-                            'second_name': secondNameController.text,
-                          })
-                          .then((value) =>
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('User Update!'),
-                                  backgroundColor: Color(0xff0961F5),
-                                ),
-                              ))
-                          .catchError((error) =>
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content:
-                                      Text("Failed to update user: $error"),
-                                  backgroundColor: const Color(0xff0961F5),
-                                ),
-                              ));
-                    }
 
-                    updateUser();
-                    print(secondNameController.text);
-                    Navigator.pop(context);
-
-                  })
             ],
           ),
         ),

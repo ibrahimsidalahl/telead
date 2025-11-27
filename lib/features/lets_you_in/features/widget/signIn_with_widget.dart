@@ -27,12 +27,12 @@ class SigninWithWidget extends StatelessWidget {
             ),
             child: CircleAvatar(
               backgroundColor: Color(0xffffffff),
-              radius: 20.r,
+              radius:18.r,
               backgroundImage: AssetImage(image),
             ),
           ),
           SizedBox(
-            width: 10.w,
+            width: 8.w,
           ),
           Text(
             title,

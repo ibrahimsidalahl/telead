@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+
   flutter:
     sdk: flutter
 
@@ -47,14 +48,20 @@ dependencies:
   flutter_switch_dark_light:
   animated_text_kit:
   image_picker:
-  path:
+  path: ^1.9.1
   flutter_launcher_icons: ^0.14.3
   video_player:
   chewie:
   syncfusion_flutter_pdfviewer:
+  shared_preferences: ^2.5.2
+  flutter_bloc: ^9.1.1
+  dots_indicator: ^4.0.1
 
+  flutter_native_splash: any
+  cached_network_image: ^3.4.1
+  sqflite: ^2.4.2
+  carousel_slider: ^5.1.1
 dev_dependencies:
-  flutter_native_splash:
   flutter_test:
     sdk: flutter
 

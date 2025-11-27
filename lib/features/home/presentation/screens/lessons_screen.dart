@@ -10,164 +10,149 @@ class LessonsScreen extends StatelessWidget {
 
   const LessonsScreen({required this.lessons, super.key});
 
-  static const routeName = 'lessons';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF5F9FF),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xffF5F9FF),
+        backgroundColor:    Theme.of(context).scaffoldBackgroundColor,
+
+        elevation: 0,
         title: Text(
           'Lessons',
-          style: AppStyles.style24(context),
+          style: AppStyles.style24(context).copyWith(color:    Theme.of(context).primaryColor,
         ),
+        ),
+        centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: SingleChildScrollView(
-          child: Container(
-            width: 360.w,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16.r),
-            ),
-            child: Column(
-              children: lessons.asMap().entries.map((entry) {
-                final index = entry.key + 1;
-                final lesson = entry.value;
-                return Column(
-                  children: [
-                    ListTile(
-                      leading: CircleAvatar(
-                        child: Text(index.toString()),
-                        radius: 18.r,
-                      ),
-                      title: Text(
-                        lesson.title,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text('15 Mins'),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => Dialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.r),
-                                  ),
-                                  child: Container(
-                                    height: 400.h,
-                                    padding: EdgeInsets.all(10.r),
-                                    child: Column(
-                                      children: [
-                                        // العنوان مع زر الإغلاق
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              '${lesson.title}',
-                                              style: TextStyle(
-                                                  fontSize: 18.sp,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            IconButton(
-                                              icon: Icon(Icons.close,
-                                                  color: Colors.red),
-                                              onPressed: () =>
-                                                  Navigator.pop(context),
-                                            ),
-                                          ],
-                                        ),
-                                        Divider(),
-                                        // عرض الفيديو داخل النافذة
-                                        Expanded(
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(12.r),
-                                            child: VideoPlayerScreen(
-                                                videoUrl: lesson.video_url),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                            icon: Icon(
-                              Icons.play_circle,
-                              color: Color(0xff0961F5),
-                              size: 24.r,
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => Dialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.r),
-                                  ),
-                                  child: Container(
-                                    height: 600.h, // ضبط ارتفاع مناسب
-                                    // ضبط عرض مناسب
-                                    child: Column(
-                                      children: [
-                                        // العنوان وشريط الإغلاق
-                                        Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "${lesson.title}.pdf",
-                                                style: TextStyle(
-                                                    fontSize: 18.sp,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              IconButton(
-                                                icon: Icon(Icons.close,
-                                                    color: Colors.red),
-                                                onPressed: () =>
-                                                    Navigator.pop(context),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Divider(),
-                                        // عرض ملف PDF
-                                        Expanded(
-                                          child: SfPdfViewer.network(
-                                              lesson.pdf_url),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                            icon: Icon(
-                              Icons.file_open,
-                              color: Color(0xff0961F5),
-                              size: 24.r,
-                            ),
-                          ),
-                        ],
-                      ),
+      body: SafeArea(
+        child: ListView.builder(
+          padding: EdgeInsets.all(16.r),
+          itemCount: lessons.length,
+          itemBuilder: (context, index) {
+            final lesson = lessons[index];
+            return Card(
+              color:Theme.of(context).scaffoldBackgroundColor,
+
+              margin: EdgeInsets.only(bottom: 16.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+              elevation: 4,
+              child: ListTile(
+                contentPadding: EdgeInsets.all(12.r),
+                leading: CircleAvatar(
+                  radius: 22.r,
+                  backgroundColor: const Color(0xff0961F5),
+                  child: Text(
+                    "${index + 1}",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
-                    const Divider(),
+                  ),
+                ),
+                title: Text(
+                  lesson.title,
+                  style: TextStyle(
+                      color:    Theme.of(context).primaryColor,
+
+                      fontWeight: FontWeight.bold, fontSize: 16.sp),
+                ),
+                subtitle: Padding(
+                  padding: EdgeInsets.only(top: 4.h),
+                  child: Row(
+                    children: [
+                      Icon(Icons.timer, size: 16.r, color: Colors.grey),
+                      SizedBox(width: 4.w),
+                      Text("15 mins",
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            color: Colors.grey[600],
+                          )),
+                    ],
+                  ),
+                ),
+                trailing: Wrap(
+                  spacing: 8,
+                  children: [
+                    IconButton(
+                      tooltip: "Watch Video",
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) => Container(
+                            height: MediaQuery.of(context).size.height * 0.7,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(24.r)),
+                            ),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(12.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        lesson.title,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18.sp),
+                                      ),
+                                      IconButton(
+                                        icon: Icon(Icons.close,
+                                            size: 18.sp,
+                                            color: Colors.redAccent),
+                                        onPressed: () => Navigator.pop(context),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Divider(),
+                                Expanded(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(12.r),
+                                    child: VideoPlayerScreen(
+                                        videoUrl: lesson.video_url),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.play_circle_fill,
+                          color: Color(0xff0961F5), size: 28.r),
+                    ),
+                    IconButton(
+                      tooltip: "Open PDF",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => Scaffold(
+                              appBar: AppBar(
+                                title: Text("${lesson.title}.pdf"),
+                              ),
+                              body: SfPdfViewer.network(lesson.pdf_url),
+                            ),
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.picture_as_pdf,
+                          color: Colors.redAccent, size: 28.r),
+                    ),
                   ],
-                );
-              }).toList(),
-            ),
-          ),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

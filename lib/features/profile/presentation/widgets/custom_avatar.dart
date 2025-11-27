@@ -9,8 +9,8 @@ class CustomAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-
-      backgroundImage: NetworkImage(url,),
+backgroundColor: Colors.white,
+      backgroundImage: NetworkImage(url ,),
       radius: 70.r,
     );
 
